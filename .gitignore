@@ -1,0 +1,23 @@
+# environment variables
+*.env
+
+# batch scripts
+*.bat
+*.cmd
+
+# bash scripts
+*.sh
+
+# git stuff
+.git
+
+# vscode configs
+.vscode
+
+# vscode extensions
+.VSCodeCounter
+
+# node stuff
+node_modules
+npm
+package-lock.json

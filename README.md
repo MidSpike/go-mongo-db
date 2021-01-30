@@ -21,12 +21,12 @@ async function main() {
     /* Finding document(s) in a database collection */
     const database_name = process.env.MONGO_DATABASE_NAME;
     const collection_name = process.env.MONGO_USERS_COLLECTION_NAME;
-    const find_query_filter = {
+    const find_filter = {
         'gender': 'male',
         'age': 35,
     };
-    const all_matching_documents = await go_mongo_db.find(database_name, collection_name, find_query_filter);
-    const [ first_matching_document ] = await go_mongo_db.find(database_name, collection_name, find_query_filter);
+    const all_matching_documents = await go_mongo_db.find(database_name, collection_name, find_filter);
+    const [ first_matching_document ] = await go_mongo_db.find(database_name, collection_name, find_filter);
 
     /* Adding document(s) to a database collection */
     const documents_to_add = [

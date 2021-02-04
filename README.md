@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-npm i github:MidSpike/go-mongo-db
+npm i github:Inertia-Lighting/go-mongo-db
 ```
 
 ## Usage

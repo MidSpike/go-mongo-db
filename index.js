@@ -69,12 +69,13 @@ class GoMongoDB {
      * @param {String} database_name 
      * @param {String} collection_name 
      * @param {*} filter (see url)
+     * @param {*} options (see url)
      * @returns {Promise<any[]>} 
      */
-    async find(database_name, collection_name, filter={}) {
+    async find(database_name, collection_name, filter={}, options={}) {
         try {
             await this.connect();
-            return await this.collection(database_name, collection_name).find(filter).toArray();
+            return await this.collection(database_name, collection_name).find(filter, options).toArray();
         } catch (error) {
             throw error;
         }

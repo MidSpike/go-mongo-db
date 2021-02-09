@@ -2,13 +2,7 @@
 
 //---------------------------------------------------------------------------------------------------------------//
 
-const { MongoClient } = require('mongodb');
-
-const {
-    InsertWriteOpResult,
-    UpdateWriteOpResult,
-    DeleteWriteOpResultObject,
-} = require('mongodb');
+const MongoDB = require('mongodb');
 
 //---------------------------------------------------------------------------------------------------------------//
 
@@ -20,13 +14,13 @@ class GoMongoDB {
      * @param {String} connection_url the entire connection url
      */
     constructor(connection_url) {
-        this.#client = new MongoClient(connection_url, {
+        this.#client = new MongoDB.MongoClient(connection_url, {
             useUnifiedTopology: true,
         });
     }
 
     /**
-     * @returns {MongoClient} the MongoDB client instance
+     * @returns {MongoDB.MongoClient} the MongoDB client instance
      */
     get client() {
         return this.#client;
@@ -68,8 +62,8 @@ class GoMongoDB {
      * [Finds all documents matching the filter](https://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#find)
      * @param {String} database_name 
      * @param {String} collection_name 
-     * @param {*} filter (see url)
-     * @param {*} options (see url)
+     * @param {MongoDB.FilterQuery} filter (see url)
+     * @param {MongoDB.FindOneOptions} options (see url)
      * @returns {Promise<any[]>} 
      */
     async find(database_name, collection_name, filter={}, options={}) {
@@ -80,14 +74,14 @@ class GoMongoDB {
             throw error;
         }
     }
-    
+
     /**
      * [Adds documents to a specified collection](https://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#insertMany)
      * @param {String} database_name 
      * @param {String} collection_name 
-     * @param {Array<*>} items (see url)
-     * @param {*} options (see url)
-     * @returns {Promise<InsertWriteOpResult>} 
+     * @param {any[]} items (see url)
+     * @param {MongoDB.CollectionInsertManyOptions} options (see url)
+     * @returns {Promise<MongoDB.InsertWriteOpResult>} 
      */
     async add(database_name, collection_name, items=[], options={}) {
         try {
@@ -102,10 +96,10 @@ class GoMongoDB {
      * [Updates all documents matching the filter](https://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#updateMany)
      * @param {String} database_name 
      * @param {String} collection_name 
-     * @param {*} filter (see url)
-     * @param {*} update (see url)
-     * @param {*} options (see url)
-     * @returns {Promise<UpdateWriteOpResult>} 
+     * @param {MongoDB.FilterQuery} filter (see url)
+     * @param {MongoDB.UpdateQuery} update (see url)
+     * @param {MongoDB.UpdateManyOptions} options (see url)
+     * @returns {Promise<MongoDB.UpdateWriteOpResult>} 
      */
     async update(database_name, collection_name, filter={}, update={}, options={}) {
         try {
@@ -120,9 +114,9 @@ class GoMongoDB {
      * [Removes documents in a specified collection](https://mongodb.github.io/node-mongodb-native/3.1/api/Collection.html#deleteMany)
      * @param {String} database_name 
      * @param {String} collection_name 
-     * @param {*} filter (see url)
-     * @param {*} options (see url)
-     * @returns {Promise<DeleteWriteOpResultObject>} 
+     * @param {MongoDB.FilterQuery} filter (see url)
+     * @param {MongoDB.CommonOptions} options (see url)
+     * @returns {Promise<MongoDB.DeleteWriteOpResultObject>} 
      */
     async remove(database_name, collection_name, filter={}, options={}) {
         try {

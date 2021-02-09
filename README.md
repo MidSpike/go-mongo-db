@@ -14,7 +14,7 @@ const GoMongoDB = require('go-mongo-db');
 
 async function main() {
     /* Creating a GoMongoDB instance */
-    // process.env.MONGO_CONNECTION_URL = 'mongodb://username:password@hostname:port/'
+    // set environment variable 'MONGO_CONNECTION_URL' to 'mongodb://username:password@hostname:port/'
     const connection_url = process.env.MONGO_CONNECTION_URL;
     const go_mongo_db = new GoMongoDB(connection_url);
 
@@ -31,12 +31,12 @@ async function main() {
     /* Adding document(s) to a database collection */
     const documents_to_add = [
         {
-            'id': '34565232141264',
+            'user_id': '34565232141264',
             'name': 'John Doe',
             'gender': 'male',
             'age': 26,
         }, {
-            'id': '34561234213412'
+            'user_id': '34561234213412'
             'name': 'Jane Doe',
             'gender': 'female',
             'age': 43,
@@ -45,27 +45,23 @@ async function main() {
     const all_matching_documents = await go_mongo_db.add(database_name, collection_name, documents_to_add);
 
     /* Updating document(s) in a database collection */
-    const update_filter = [
-        {
-            'id': '34565232141264',
-        },
-    ];
+    const update_filter = {
+        'user_id': '34565232141264',
+    };
     const update_operations = {
         $set: {
             'age': 27,
         },
     };
     const update_options = {
-        upsert: true, // used to make a new document if it doesn't exist already
+        upsert: true, // used to make a new document if it doesn't already exist
     };
     await go_mongo_db.add(database_name, collection_name, update_filter, update_operations, update_options);
 
     /* Removing document(s) from a database collection */
-    const remove_filter = [
-        {
-            'id': '34561234213412',
-        },
-    ];
+    const remove_filter = {
+        'user_id': '34561234213412',
+    };
     await go_mongo_db.remove(database_name, collection_name, remove_filter);
 }
 main();

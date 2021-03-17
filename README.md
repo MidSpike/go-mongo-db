@@ -42,7 +42,7 @@ async function main() {
             'age': 43,
         },
     ];
-    const all_matching_documents = await go_mongo_db.add(database_name, collection_name, documents_to_add);
+    await go_mongo_db.add(database_name, collection_name, documents_to_add);
 
     /* Updating document(s) in a database collection */
     const update_filter = {

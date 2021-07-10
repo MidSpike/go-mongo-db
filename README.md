@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-npm i github:Inertia-Lighting/go-mongo-db
+npm i github:Inertia-Lighting/go-mongo-db#v0.0.1-beta
 ```
 
 ## Usage

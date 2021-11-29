@@ -25,7 +25,7 @@ class GoMongoDB {
     }
 
     /**
-     * Used internally to ensure a connection is initiated to the database before performing actions
+     * Used to connect to the database (must be done ONCE before all other methods)
      */
     async connect() {
         return await this.client.connect();
@@ -65,12 +65,9 @@ class GoMongoDB {
      */
     async find(database_name, collection_name, filter={}, options={}) {
         try {
-            await this.connect();
             return await this.collection(database_name, collection_name).find(filter, options).toArray();
         } catch (error) {
             throw error;
-        } finally {
-            await this.destroy();
         }
     }
 
@@ -84,12 +81,9 @@ class GoMongoDB {
      */
     async add(database_name, collection_name, items=[], options={}) {
         try {
-            await this.connect();
             return await this.collection(database_name, collection_name).insertMany(items, options);
         } catch (error) {
             throw error;
-        } finally {
-            await this.destroy();
         }
     }
 
@@ -104,12 +98,9 @@ class GoMongoDB {
      */
     async update(database_name, collection_name, filter={}, update={}, options={}) {
         try {
-            await this.connect();
             return await this.collection(database_name, collection_name).updateMany(filter, update, options);
         } catch (error) {
             throw error;
-        } finally {
-            await this.destroy();
         }
     }
 
@@ -123,12 +114,9 @@ class GoMongoDB {
      */
     async remove(database_name, collection_name, filter={}, options={}) {
         try {
-            await this.connect();
             return await this.collection(database_name, collection_name).deleteMany(filter, options);
         } catch (error) {
             throw error;
-        } finally {
-            await this.destroy();
         }
     }
 }

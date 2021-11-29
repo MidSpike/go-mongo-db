@@ -8,6 +8,7 @@ const MongoDB = require('mongodb');
 
 class GoMongoDB {
     #client;
+    #isConnected = false;
 
     /**
      * Provides a simplistic method of interacting with MongoDB servers
@@ -28,7 +29,12 @@ class GoMongoDB {
      * Used to connect to the database (must be done ONCE before all other methods)
      */
     async connect() {
-        return await this.client.connect();
+        if (!this.#isConnected) {
+            await this.client.connect();
+            this.#isConnected = true;
+        }
+
+        return this;
     }
 
     /**
@@ -65,6 +71,7 @@ class GoMongoDB {
      */
     async find(database_name, collection_name, filter={}, options={}) {
         try {
+            await this.connect();
             return await this.collection(database_name, collection_name).find(filter, options).toArray();
         } catch (error) {
             throw error;
@@ -81,6 +88,7 @@ class GoMongoDB {
      */
     async add(database_name, collection_name, items=[], options={}) {
         try {
+            await this.connect();
             return await this.collection(database_name, collection_name).insertMany(items, options);
         } catch (error) {
             throw error;
@@ -98,6 +106,7 @@ class GoMongoDB {
      */
     async update(database_name, collection_name, filter={}, update={}, options={}) {
         try {
+            await this.connect();
             return await this.collection(database_name, collection_name).updateMany(filter, update, options);
         } catch (error) {
             throw error;
@@ -114,6 +123,7 @@ class GoMongoDB {
      */
     async remove(database_name, collection_name, filter={}, options={}) {
         try {
+            await this.connect();
             return await this.collection(database_name, collection_name).deleteMany(filter, options);
         } catch (error) {
             throw error;

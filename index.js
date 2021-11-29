@@ -28,8 +28,7 @@ class GoMongoDB {
      * Used internally to ensure a connection is initiated to the database before performing actions
      */
     async connect() {
-        if (!this.client.isConnected()) await this.client.connect();
-        return this;
+        return await this.client.connect();
     }
 
     /**
@@ -70,6 +69,8 @@ class GoMongoDB {
             return await this.collection(database_name, collection_name).find(filter, options).toArray();
         } catch (error) {
             throw error;
+        } finally {
+            await this.destroy();
         }
     }
 
@@ -87,6 +88,8 @@ class GoMongoDB {
             return await this.collection(database_name, collection_name).insertMany(items, options);
         } catch (error) {
             throw error;
+        } finally {
+            await this.destroy();
         }
     }
 
@@ -105,6 +108,8 @@ class GoMongoDB {
             return await this.collection(database_name, collection_name).updateMany(filter, update, options);
         } catch (error) {
             throw error;
+        } finally {
+            await this.destroy();
         }
     }
 
@@ -122,6 +127,8 @@ class GoMongoDB {
             return await this.collection(database_name, collection_name).deleteMany(filter, options);
         } catch (error) {
             throw error;
+        } finally {
+            await this.destroy();
         }
     }
 }

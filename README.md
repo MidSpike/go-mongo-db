@@ -3,10 +3,12 @@
 ## Installation
 
 ```
-npm i github:Inertia-Lighting/go-mongo-db
+npm i github:Inertia-Lighting/go-mongo-db#v0.0.1-beta
 ```
 
 ## Usage
+
+### Adding documents
 
 ```js
 /* Importing GoMongoDB */
@@ -18,17 +20,11 @@ async function main() {
     const connection_url = process.env.MONGO_CONNECTION_URL;
     const go_mongo_db = new GoMongoDB(connection_url);
 
-    /* Finding document(s) in a database collection */
+    /* Set relevant database info */
     const database_name = process.env.MONGO_DATABASE_NAME;
     const collection_name = process.env.MONGO_USERS_COLLECTION_NAME;
-    const find_filter = {
-        'gender': 'male',
-        'age': 35,
-    };
-    const all_matching_documents = await go_mongo_db.find(database_name, collection_name, find_filter);
-    const [ first_matching_document ] = await go_mongo_db.find(database_name, collection_name, find_filter);
 
-    /* Adding document(s) to a database collection */
+    /* Adding documents to a database collection */
     const documents_to_add = [
         {
             'user_id': '34565232141264',
@@ -42,9 +38,56 @@ async function main() {
             'age': 43,
         },
     ];
-    const all_matching_documents = await go_mongo_db.add(database_name, collection_name, documents_to_add);
+    await go_mongo_db.add(database_name, collection_name, documents_to_add);
+}
 
-    /* Updating document(s) in a database collection */
+main();
+```
+
+### Finding documents
+
+```js
+/* Importing GoMongoDB */
+const GoMongoDB = require('go-mongo-db');
+
+async function main() {
+    /* Creating a GoMongoDB instance */
+    // set environment variable 'MONGO_CONNECTION_URL' to 'mongodb://username:password@hostname:port/'
+    const connection_url = process.env.MONGO_CONNECTION_URL;
+    const go_mongo_db = new GoMongoDB(connection_url);
+
+    /* Set relevant database info */
+    const database_name = process.env.MONGO_DATABASE_NAME;
+    const collection_name = process.env.MONGO_USERS_COLLECTION_NAME;
+
+     /* Finding documents in a database collection */
+    const find_filter = {
+        'gender': 'male',
+    };
+    const all_matching_documents = await go_mongo_db.find(database_name, collection_name, find_filter);
+    const [ first_matching_document ] = await go_mongo_db.find(database_name, collection_name, find_filter);
+}
+
+main();
+```
+
+### Updating documents
+
+```js
+/* Importing GoMongoDB */
+const GoMongoDB = require('go-mongo-db');
+
+async function main() {
+    /* Creating a GoMongoDB instance */
+    // set environment variable 'MONGO_CONNECTION_URL' to 'mongodb://username:password@hostname:port/'
+    const connection_url = process.env.MONGO_CONNECTION_URL;
+    const go_mongo_db = new GoMongoDB(connection_url);
+
+    /* Set relevant database info */
+    const database_name = process.env.MONGO_DATABASE_NAME;
+    const collection_name = process.env.MONGO_USERS_COLLECTION_NAME;
+
+    /* Updating documents in a database collection */
     const update_filter = {
         'user_id': '34565232141264',
     };
@@ -54,15 +97,36 @@ async function main() {
         },
     };
     const update_options = {
-        upsert: true, // used to make a new document if it doesn't already exist
+        upsert: true, // used to create a new document if it doesn't already exist
     };
-    await go_mongo_db.add(database_name, collection_name, update_filter, update_operations, update_options);
+    await go_mongo_db.update(database_name, collection_name, update_filter, update_operations, update_options);
+}
 
-    /* Removing document(s) from a database collection */
+main();
+```
+
+### Removing documents
+
+```js
+/* Importing GoMongoDB */
+const GoMongoDB = require('go-mongo-db');
+
+async function main() {
+    /* Creating a GoMongoDB instance */
+    // set environment variable 'MONGO_CONNECTION_URL' to 'mongodb://username:password@hostname:port/'
+    const connection_url = process.env.MONGO_CONNECTION_URL;
+    const go_mongo_db = new GoMongoDB(connection_url);
+
+    /* Set relevant database info */
+    const database_name = process.env.MONGO_DATABASE_NAME;
+    const collection_name = process.env.MONGO_USERS_COLLECTION_NAME;
+
+    /* Removing documents from a database collection */
     const remove_filter = {
         'user_id': '34561234213412',
     };
     await go_mongo_db.remove(database_name, collection_name, remove_filter);
 }
+
 main();
 ```

@@ -14,9 +14,7 @@ class GoMongoDB {
      * @param {String} connection_url the entire connection url
      */
     constructor(connection_url) {
-        this.#client = new MongoDB.MongoClient(connection_url, {
-            useUnifiedTopology: true,
-        });
+        this.#client = new MongoDB.MongoClient(connection_url);
     }
 
     /**

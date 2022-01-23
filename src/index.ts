@@ -2,7 +2,7 @@
 //    Copyright (c) Inertia Lighting, Some Rights Reserved    //
 //------------------------------------------------------------//
 
-import MongoDB from 'mongodb';
+import * as MongoDB from 'mongodb';
 
 //------------------------------------------------------------//
 

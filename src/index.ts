@@ -2,60 +2,67 @@
 //    Copyright (c) Inertia Lighting, Some Rights Reserved    //
 //------------------------------------------------------------//
 
-import * as MongoDB from 'mongodb';
+import {
+    BulkWriteOptions,
+    DeleteOptions,
+    Document,
+    Filter,
+    FindOptions,
+    MongoClient,
+    MongoClientOptions,
+    OptionalId,
+    UpdateFilter,
+    UpdateOptions,
+    WithId,
+} from 'mongodb';
 
 //------------------------------------------------------------//
 
 export class GoMongoDB {
-    #client: MongoDB.MongoClient;
-    #isConnected: boolean = false;
+    public client: MongoClient;
+    private isConnected: boolean = false;
 
     /**
-     * Provides a simplistic method of interacting with MongoDB servers
+     * Provides a simplistic method of interacting with MongoDB
      */
     constructor(
-        connection_url: string
+        /** @example `mongodb://username:password@hostname:port/` */
+        connection_url: string,
+        client_options?: MongoClientOptions
     ) {
-        this.#client = new MongoDB.MongoClient(connection_url);
+        this.client = new MongoClient(connection_url, client_options);
     }
 
     /**
-     * The MongoDB client instance
+     * Used internally to initiate the connection to the database
      */
-    get client() {
-        return this.#client;
-    }
-
-    /**
-     * Used to connect to the database (this must be done ONCE before all other methods)
-     */
-    async connect() {
-        if (!this.#isConnected) {
+    private async _connect() {
+        if (!this.isConnected) {
             await this.client.connect();
-            this.#isConnected = true;
+            this.isConnected = true;
         }
 
         return this;
     }
 
     /**
-     * Destroys the connection to the database with no way to re-connect
+     * Forcibly terminates the connection to the database with no way to reconnect
      */
     async destroy() {
         return this.client.close();
     }
 
     /**
-     * Fetches the specified database
+     * Uses the specified database
      */
     database(
         database_name: string
     ) {
-        return this.#client.db(database_name);
+        return this.client.db(database_name);
     }
 
     /**
-     * Fetches the specified collection from the database
+     * Uses the specified collection from the database
      */
     collection(
         database_name: string,
@@ -70,10 +77,10 @@ export class GoMongoDB {
     async find(
         database_name: string,
         collection_name: string,
-        filter: MongoDB.Filter<MongoDB.WithId<MongoDB.Document>>,
-        options: MongoDB.FindOptions={}
+        filter: Filter<WithId<Document>>,
+        options: FindOptions={}
     ) {
-        await this.connect();
+        await this._connect();
         return await this.collection(database_name, collection_name).find(filter, options).toArray();
     }
 
@@ -83,10 +90,10 @@ export class GoMongoDB {
     async add(
         database_name: string,
         collection_name: string,
-        items: MongoDB.OptionalId<MongoDB.Document>[],
-        options: MongoDB.BulkWriteOptions={}
+        items: OptionalId<Document>[],
+        options: BulkWriteOptions={}
     ) {
-        await this.connect();
+        await this._connect();
         return await this.collection(database_name, collection_name).insertMany(items, options);
     }
 
@@ -96,11 +103,11 @@ export class GoMongoDB {
     async update(
         database_name: string,
         collection_name: string,
-        filter: MongoDB.Filter<MongoDB.Document>,
-        update: MongoDB.UpdateFilter<MongoDB.Document>,
-        options: MongoDB.UpdateOptions={}
+        filter: Filter<Document>,
+        update: UpdateFilter<Document>,
+        options: UpdateOptions={}
     ) {
-        await this.connect();
+        await this._connect();
         return await this.collection(database_name, collection_name).updateMany(filter, update, options);
     }
 
@@ -110,10 +117,10 @@ export class GoMongoDB {
     async remove(
         database_name: string,
         collection_name: string,
-        filter: MongoDB.Filter<MongoDB.Document>,
-        options: MongoDB.DeleteOptions={}
+        filter: Filter<Document>,
+        options: DeleteOptions={}
     ) {
-        await this.connect();
+        await this._connect();
         return await this.collection(database_name, collection_name).deleteMany(filter, options);
     }
 }

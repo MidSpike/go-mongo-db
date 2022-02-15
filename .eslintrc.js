@@ -1,7 +1,11 @@
 //------------------------------------------------------------//
-//         Copyright (c) VerMeta, All Rights Reserved         //
+//    Copyright (c) Inertia Lighting, Some Rights Reserved    //
 //------------------------------------------------------------//
 
+/**
+ * @type {import("eslint").Linter.Config}
+ * @see https://eslint.org/docs/rules/
+ */
 module.exports = {
     'env': {
         'browser': false,
@@ -10,7 +14,6 @@ module.exports = {
         'es2021': true,
     },
     'extends': [
-        'standard',
         'eslint:recommended',
     ],
     'parser': '@typescript-eslint/parser',
@@ -338,10 +341,6 @@ module.exports = {
             },
         ],
         'spaced-comment': 'off',
-        'strict': [
-            'error',
-            'global',
-        ],
         'switch-colon-spacing': 'error',
         'symbol-description': 'error',
         'template-curly-spacing': [

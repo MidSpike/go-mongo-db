@@ -1,15 +1,38 @@
 {
-  "name": "go-mongo-db",
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "dependencies": {
-    "mongodb": "^4.2.0"
-  }
+    "name": "go-mongo-db",
+    "version": "1.1.0",
+    "description": "Allows for quick and simple access to MongoDB databases.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "husky": "is-ci || husky install",
+        "lint": "npx eslint . --fix",
+        "test": "npm run husky && npm run lint",
+        "build": "npm run test && npx tsc --build",
+        "prepare": "npm run build"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "dependencies": {
+        "mongodb": "^4.3.1"
+    },
+    "devDependencies": {
+        "@tsconfig/node16": "^1.0.2",
+        "@types/dotenv": "^8.2.0",
+        "@types/express": "^4.17.13",
+        "@types/node": "^17.0.18",
+        "@typescript-eslint/eslint-plugin": "^5.12.0",
+        "@typescript-eslint/parser": "^5.12.0",
+        "eslint": "^8.9.0",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-plugin-node": "^11.1.0",
+        "eslint-plugin-promise": "^6.0.0",
+        "husky": "^7.0.4",
+        "is-ci": "^3.0.1",
+        "typescript": "^4.5.4"
+    }
 }

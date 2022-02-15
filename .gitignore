@@ -1,23 +1,37 @@
+# Git
+.git
+
+# VS Code configuration
+.vscode
+
+# VS Code Extensions
+.VSCodeCounter
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Dependency directories
+node_modules/
+
+# TypeScript v1 declaration files
+typings/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
 # environment variables
 *.env
 
-# batch scripts
-*.bat
-*.cmd
-
-# bash scripts
-*.sh
-
-# git stuff
-.git
-
-# vscode configs
-.vscode
-
-# vscode extensions
-.VSCodeCounter
-
-# node stuff
-node_modules
-npm
-package-lock.json
+# Typescript output
+dist

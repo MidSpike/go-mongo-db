@@ -4,6 +4,7 @@
 
 import {
     BulkWriteOptions,
+    CountDocumentsOptions,
     DeleteOptions,
     Document,
     Filter,
@@ -13,14 +14,14 @@ import {
     OptionalId,
     UpdateFilter,
     UpdateOptions,
-    WithId,
 } from 'mongodb';
 
 //------------------------------------------------------------//
 
 export class GoMongoDB {
     public client: MongoClient;
-    private isConnected: boolean = false;
+
+    private _is_connected: boolean = false;
 
     /**
      * Provides a simplistic method of interacting with MongoDB
@@ -37,9 +38,9 @@ export class GoMongoDB {
      * Used internally to initiate the connection to the database
      */
     private async _connect() {
-        if (!this.isConnected) {
+        if (!this._is_connected) {
             await this.client.connect();
-            this.isConnected = true;
+            this._is_connected = true;
         }
 
         return this;
@@ -72,13 +73,26 @@ export class GoMongoDB {
     }
 
     /**
+     * Counts the documents matching the filter
+     */
+    async count(
+        database_name: string,
+        collection_name: string,
+        filter: Filter<Document>,
+        options: CountDocumentsOptions={}
+    ) {
+        await this._connect();
+        return await this.collection(database_name, collection_name).countDocuments(filter, options);
+    }
+
+    /**
      * Finds all documents matching the filter
      */
     async find(
         database_name: string,
         collection_name: string,
-        filter: Filter<WithId<Document>>,
-        options: FindOptions={}
+        filter: Filter<Document>,
+        options: FindOptions<Document>={}
     ) {
         await this._connect();
         return await this.collection(database_name, collection_name).find(filter, options).toArray();

@@ -1,6 +1,6 @@
 {
     "name": "go-mongo-db",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "description": "Allows for quick and simple access to MongoDB databases.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -10,13 +10,11 @@
     "scripts": {
         "husky": "is-ci || husky install",
         "lint": "npx eslint . --fix",
-        "test": "npm run husky && npm run lint",
-        "build": "npm run test && npx tsc --build",
-        "prepare": "npm run build"
+        "build": "npx tsc --build",
+        "prepare": "npm run husky && npm run lint && npm run build",
+        "test": "npm run prepare"
     },
-    "keywords": [
-        "Go Mongo DB"
-    ],
+    "keywords": [],
     "author": "Inertia Lighting",
     "license": "MIT",
     "engines": {
@@ -34,9 +32,6 @@
         "@typescript-eslint/eslint-plugin": "^5.12.0",
         "@typescript-eslint/parser": "^5.12.0",
         "eslint": "^8.9.0",
-        "eslint-plugin-import": "^2.25.4",
-        "eslint-plugin-node": "^11.1.0",
-        "eslint-plugin-promise": "^6.0.0",
         "husky": "^7.0.4",
         "is-ci": "^3.0.1",
         "typescript": "^4.5.5"

@@ -1,7 +1,3 @@
-//------------------------------------------------------------//
-//    Copyright (c) Inertia Lighting, Some Rights Reserved    //
-//------------------------------------------------------------//
-
 /**
  * @type {import("eslint").Linter.Config}
  * @see https://eslint.org/docs/rules/

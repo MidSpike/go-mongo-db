@@ -32,6 +32,6 @@
         "eslint": "8.15.0",
         "husky": "8.0.1",
         "is-ci": "3.0.1",
-        "typescript": "4.6.4"
+        "typescript": "4.7.2"
     }
 }

@@ -1,6 +1,6 @@
 # MIT License
 
-Copyright &copy; Inertia Lighting
+Copyright &copy; MidSpike
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

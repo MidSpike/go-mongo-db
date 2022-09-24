@@ -3,7 +3,7 @@
 ## Installation (master branch)
 
 ```
-npm i github:Inertia-Lighting/go-mongo-db
+npm i github:MidSpike/go-mongo-db
 ```
 
 ## Important

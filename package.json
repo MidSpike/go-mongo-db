@@ -28,7 +28,7 @@
         "@tsconfig/node16": "1.0.3",
         "@types/node": "18.8.5",
         "@typescript-eslint/eslint-plugin": "5.40.0",
-        "@typescript-eslint/parser": "5.40.0",
+        "@typescript-eslint/parser": "5.40.1",
         "eslint": "8.25.0",
         "husky": "8.0.1",
         "is-ci": "3.0.1",

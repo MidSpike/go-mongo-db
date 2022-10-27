@@ -8,9 +8,9 @@ npm i github:MidSpike/go-mongo-db
 
 ## Important
 
-All of our examples assume that you are using the [`dotenv`](https://www.npmjs.com/package/dotenv) package to load your environment variables.
+All examples assume that [`dotenv`](https://www.npmjs.com/package/dotenv) is being used to load environment variables.
 
-If you are using `typescript` and `dotenv` we recommend that you add `--require dotenv/config` to your `package.json` start script:
+When using `dotenv`, add `--require dotenv/config` to the `start` script in `package.json`:
 ```json5
 {
     /* ... */

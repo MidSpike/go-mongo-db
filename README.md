@@ -29,7 +29,7 @@ If you are using `typescript` and `dotenv` we recommend that you add `--require 
 <summary>Basic Usage</summary>
 
 ```ts
-import { MongoDB } from 'go-mongo-db';
+import { GoMongoDB } from 'go-mongo-db';
 
 const connection_url = process.env.MONGO_CONNECTION_URL; // mongodb://username:password@hostname:port/
 if (!connection_url?.length) throw new Error('MONGO_CONNECTION_URL is undefined or empty');

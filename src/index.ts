@@ -138,3 +138,7 @@ export class GoMongoDB {
         return await this.collection(database_name, collection_name).deleteMany(filter, options);
     }
 }
+
+//------------------------------------------------------------//
+
+export * as MongoDB from 'mongodb';

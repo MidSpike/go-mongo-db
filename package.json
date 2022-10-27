@@ -1,6 +1,6 @@
 {
     "name": "go-mongo-db",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "description": "Allows for quick and simple access to MongoDB databases.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -22,14 +22,14 @@
         "npm": ">=8.0.0"
     },
     "dependencies": {
-        "mongodb": "4.10.0"
+        "mongodb": "4.11.0"
     },
     "devDependencies": {
         "@tsconfig/node16": "1.0.3",
-        "@types/node": "18.8.5",
-        "@typescript-eslint/eslint-plugin": "5.40.0",
-        "@typescript-eslint/parser": "5.40.0",
-        "eslint": "8.25.0",
+        "@types/node": "18.11.7",
+        "@typescript-eslint/eslint-plugin": "5.41.0",
+        "@typescript-eslint/parser": "5.41.0",
+        "eslint": "8.26.0",
         "husky": "8.0.1",
         "is-ci": "3.0.1",
         "typescript": "4.8.4"

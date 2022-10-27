@@ -23,10 +23,10 @@ If you are using `typescript` and `dotenv` we recommend that you add `--require 
 }
 ```
 
-## Usage
+## Getting started
 
 <details open>
-<summary>Basic Usage</summary>
+<summary>Initializing</summary>
 
 ```ts
 import { GoMongoDB } from 'go-mongo-db';
@@ -205,4 +205,18 @@ async function main() {
 
 main();
 ```
+</details>
+
+## Advanced usage
+
+<details>
+<summary>Import MongoDB</summary>
+
+The following example shows how to import the underlying MongoDB library used by GoMongoDB.
+
+```ts
+import { MongoDB } from 'go-mongo-db';
+```
+
+This is useful for accessing features of MongoDB that are not normally exposed by GoMongoDB, such as TypeScript definitions and advanced methods of database manipulation.
 </details>

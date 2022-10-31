@@ -26,9 +26,9 @@
     },
     "devDependencies": {
         "@tsconfig/node16": "1.0.3",
-        "@types/node": "18.11.7",
-        "@typescript-eslint/eslint-plugin": "5.41.0",
-        "@typescript-eslint/parser": "5.41.0",
+        "@types/node": "18.11.8",
+        "@typescript-eslint/eslint-plugin": "5.42.0",
+        "@typescript-eslint/parser": "5.42.0",
         "eslint": "8.26.0",
         "husky": "8.0.1",
         "is-ci": "3.0.1",

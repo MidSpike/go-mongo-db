@@ -18,7 +18,7 @@ import {
 
 //------------------------------------------------------------//
 
-export class GoMongoDB {
+export class GoMongoDb {
     private _is_connected: boolean = false;
 
     public client: MongoClient;
@@ -141,4 +141,4 @@ export class GoMongoDB {
 
 //------------------------------------------------------------//
 
-export * as MongoDB from 'mongodb';
+export * as MongoDb from 'mongodb';

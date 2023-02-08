@@ -29,13 +29,13 @@ When using `dotenv`, add `--require dotenv/config` to the `start` script in `pac
 <summary>Initializing</summary>
 
 ```ts
-import { GoMongoDB } from 'go-mongo-db';
+import { GoMongoDb } from 'go-mongo-db';
 
 const connection_url = process.env.MONGO_CONNECTION_URL; // mongodb://username:password@hostname:port/
 if (!connection_url?.length) throw new Error('MONGO_CONNECTION_URL is undefined or empty');
 
 async function main() {
-    const go_mongo_db = new GoMongoDB(connection_url);
+    const go_mongo_db = new GoMongoDb(connection_url);
 }
 ```
 </details>
@@ -44,7 +44,7 @@ async function main() {
 <summary>Adding documents</summary>
 
 ```ts
-import { GoMongoDB } from 'go-mongo-db';
+import { GoMongoDb } from 'go-mongo-db';
 
 const connection_url = process.env.MONGO_CONNECTION_URL; // mongodb://username:password@hostname:port/
 if (!connection_url?.length) throw new Error('MONGO_CONNECTION_URL is undefined or empty');
@@ -56,7 +56,7 @@ const collection_name = process.env.MONGO_USERS_COLLECTION_NAME;
 if (!collection_name?.length) throw new Error('MONGO_USERS_COLLECTION_NAME is undefined or empty');
 
 async function main() {
-    const go_mongo_db = new GoMongoDB(connection_url);
+    const go_mongo_db = new GoMongoDb(connection_url);
 
     const documents_to_add = [
         {
@@ -83,7 +83,7 @@ main();
 <summary>Counting documents</summary>
 
 ```ts
-import { GoMongoDB } from 'go-mongo-db';
+import { GoMongoDb } from 'go-mongo-db';
 
 const connection_url = process.env.MONGO_CONNECTION_URL; // mongodb://username:password@hostname:port/
 if (!connection_url?.length) throw new Error('MONGO_CONNECTION_URL is undefined or empty');
@@ -95,7 +95,7 @@ const collection_name = process.env.MONGO_USERS_COLLECTION_NAME;
 if (!collection_name?.length) throw new Error('MONGO_USERS_COLLECTION_NAME is undefined or empty');
 
 async function main() {
-    const go_mongo_db = new GoMongoDB(connection_url);
+    const go_mongo_db = new GoMongoDb(connection_url);
 
     const find_filter = {
         'gender': 'female',
@@ -112,7 +112,7 @@ main();
 <summary>Finding documents</summary>
 
 ```ts
-import { GoMongoDB } from 'go-mongo-db';
+import { GoMongoDb } from 'go-mongo-db';
 
 const connection_url = process.env.MONGO_CONNECTION_URL; // mongodb://username:password@hostname:port/
 if (!connection_url?.length) throw new Error('MONGO_CONNECTION_URL is undefined or empty');
@@ -124,7 +124,7 @@ const collection_name = process.env.MONGO_USERS_COLLECTION_NAME;
 if (!collection_name?.length) throw new Error('MONGO_USERS_COLLECTION_NAME is undefined or empty');
 
 async function main() {
-    const go_mongo_db = new GoMongoDB(connection_url);
+    const go_mongo_db = new GoMongoDb(connection_url);
 
     const find_filter = {
         'gender': 'male',
@@ -143,7 +143,7 @@ main();
 <summary>Updating documents</summary>
 
 ```ts
-import { GoMongoDB } from 'go-mongo-db';
+import { GoMongoDb } from 'go-mongo-db';
 
 const connection_url = process.env.MONGO_CONNECTION_URL; // mongodb://username:password@hostname:port/
 if (!connection_url?.length) throw new Error('MONGO_CONNECTION_URL is undefined or empty');
@@ -155,7 +155,7 @@ const collection_name = process.env.MONGO_USERS_COLLECTION_NAME;
 if (!collection_name?.length) throw new Error('MONGO_USERS_COLLECTION_NAME is undefined or empty');
 
 async function main() {
-    const go_mongo_db = new GoMongoDB(connection_url);
+    const go_mongo_db = new GoMongoDb(connection_url);
 
     const update_filter = {
         'user_id': '34565232141264',
@@ -182,7 +182,7 @@ main();
 <summary>Removing documents</summary>
 
 ```ts
-import { GoMongoDB } from 'go-mongo-db';
+import { GoMongoDb } from 'go-mongo-db';
 
 const connection_url = process.env.MONGO_CONNECTION_URL; // mongodb://username:password@hostname:port/
 if (!connection_url?.length) throw new Error('MONGO_CONNECTION_URL is undefined or empty');
@@ -194,7 +194,7 @@ const collection_name = process.env.MONGO_USERS_COLLECTION_NAME;
 if (!collection_name?.length) throw new Error('MONGO_USERS_COLLECTION_NAME is undefined or empty');
 
 async function main() {
-    const go_mongo_db = new GoMongoDB(connection_url);
+    const go_mongo_db = new GoMongoDb(connection_url);
 
     const remove_filter = {
         'user_id': '34561234213412',
@@ -212,11 +212,11 @@ main();
 <details>
 <summary>Import MongoDB</summary>
 
-The following example shows how to import the underlying MongoDB library used by GoMongoDB.
+The following example shows how to import the underlying MongoDB library used by GoMongoDb.
 
 ```ts
-import { MongoDB } from 'go-mongo-db';
+import { MongoDb } from 'go-mongo-db';
 ```
 
-This is useful for accessing features of MongoDB that are not normally exposed by GoMongoDB, such as TypeScript definitions and advanced methods of database manipulation.
+This is useful for accessing features of MongoDB that are not normally exposed by GoMongoDb, such as TypeScript definitions and advanced methods of database manipulation.
 </details>

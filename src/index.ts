@@ -19,17 +19,17 @@ import {
 //------------------------------------------------------------//
 
 export class GoMongoDB {
-    public client: MongoClient;
-
     private _is_connected: boolean = false;
+
+    public client: MongoClient;
 
     /**
      * Provides a simplistic method of interacting with MongoDB
      */
     constructor(
-        /** @example `mongodb://username:password@hostname:port/` */
+        /** @example `mongodb://{username}:{password}@{hostname}:{port}/` */
         connection_url: string,
-        client_options?: MongoClientOptions
+        client_options?: MongoClientOptions,
     ) {
         this.client = new MongoClient(connection_url, client_options);
     }
@@ -57,7 +57,7 @@ export class GoMongoDB {
      * Uses the specified database
      */
     database(
-        database_name: string
+        database_name: string,
     ) {
         return this.client.db(database_name);
     }
@@ -67,7 +67,7 @@ export class GoMongoDB {
      */
     collection(
         database_name: string,
-        collection_name: string
+        collection_name: string,
     ) {
         return this.database(database_name).collection(collection_name);
     }
@@ -79,7 +79,7 @@ export class GoMongoDB {
         database_name: string,
         collection_name: string,
         filter: Filter<Document>,
-        options: CountDocumentsOptions={}
+        options: CountDocumentsOptions = {},
     ) {
         await this._connect();
         return await this.collection(database_name, collection_name).countDocuments(filter, options);
@@ -92,10 +92,10 @@ export class GoMongoDB {
         database_name: string,
         collection_name: string,
         filter: Filter<Document>,
-        options: FindOptions<Document>={}
+        options: FindOptions<Document> = {},
     ) {
         await this._connect();
-        return await this.collection(database_name, collection_name).find(filter, options).toArray();
+        return this.collection(database_name, collection_name).find(filter, options).toArray();
     }
 
     /**
@@ -105,7 +105,7 @@ export class GoMongoDB {
         database_name: string,
         collection_name: string,
         items: OptionalId<Document>[],
-        options: BulkWriteOptions={}
+        options: BulkWriteOptions = {},
     ) {
         await this._connect();
         return await this.collection(database_name, collection_name).insertMany(items, options);
@@ -119,7 +119,7 @@ export class GoMongoDB {
         collection_name: string,
         filter: Filter<Document>,
         update: UpdateFilter<Document>,
-        options: UpdateOptions={}
+        options: UpdateOptions = {},
     ) {
         await this._connect();
         return await this.collection(database_name, collection_name).updateMany(filter, update, options);
@@ -132,7 +132,7 @@ export class GoMongoDB {
         database_name: string,
         collection_name: string,
         filter: Filter<Document>,
-        options: DeleteOptions={}
+        options: DeleteOptions = {},
     ) {
         await this._connect();
         return await this.collection(database_name, collection_name).deleteMany(filter, options);

@@ -3,6 +3,7 @@
 //------------------------------------------------------------//
 
 import {
+    AggregateOptions,
     BulkWriteOptions,
     CountDocumentsOptions,
     DeleteOptions,
@@ -123,6 +124,19 @@ export class GoMongoDb {
     ) {
         await this._connect();
         return await this.collection(database_name, collection_name).updateMany(filter, update, options);
+    }
+
+    /**
+     * Performs an aggregation on the specified collection
+     */
+    async aggregate(
+        database_name: string,
+        collection_name: string,
+        pipeline: Document[],
+        options: AggregateOptions,
+    ) {
+        await this._connect();
+        return this.collection(database_name, collection_name).aggregate(pipeline, options);
     }
 
     /**

@@ -22,10 +22,13 @@ import {
 export class GoMongoDb {
     private _is_connected: boolean = false;
 
-    public client: MongoClient;
+    private _is_destroyed: boolean = false;
+
+    public readonly client: MongoClient;
 
     /**
-     * Provides a simplistic method of interacting with MongoDB
+     * Provides a simplified interface for interacting with MongoDB.
+     * Most methods will throw when an error occurs.
      */
     constructor(
         /** @example `mongodb://{username}:{password}@{hostname}:{port}/` */
@@ -36,9 +39,20 @@ export class GoMongoDb {
     }
 
     /**
-     * Used internally to initiate the connection to the database
+     * Used internally to throw if the instance has been destroyed.
+     * Otherwise it will return void.
      */
-    private async _connect() {
+    public ensureNotDestroyed(): void {
+        if (this._is_destroyed) throw new Error('GoMongoDb instance has been destroyed and cannot be used');
+    }
+
+    /**
+     * Used internally to ensure a connection is established before performing an action.
+     * The majority of GoMongoDb methods will call this method automatically.
+     */
+    public async ensureConnection(): Promise<this> {
+        this.ensureNotDestroyed();
+
         if (!this._is_connected) {
             await this.client.connect();
             this._is_connected = true;
@@ -48,107 +62,131 @@ export class GoMongoDb {
     }
 
     /**
-     * Forcibly terminates the connection to the database with no way to reconnect
+     * Forcibly terminates the connection to the database with no way to reconnect.
+     * After calling, all methods will throw when an attempt to call is made.
      */
-    async destroy() {
+    public async destroy() {
+        this._is_destroyed = true;
+        this._is_connected = false;
+
         return this.client.close();
     }
 
     /**
-     * Uses the specified database
+     * Used internally to choose a specified database for further operations.
+     * When using children of this method directly, you must call `ensureConnection` first.
      */
-    database(
+    public database(
         database_name: string,
     ) {
+        this.ensureNotDestroyed();
+
         return this.client.db(database_name);
     }
 
     /**
-     * Uses the specified collection from the database
+     * Used internally to choose a specified collection for further operations.
+     * When using children of this method directly, you must call `ensureConnection` first.
      */
-    collection(
+    public collection(
         database_name: string,
         collection_name: string,
     ) {
+        this.ensureNotDestroyed();
+
         return this.database(database_name).collection(collection_name);
     }
 
     /**
-     * Counts the documents matching the filter
+     * Counts the number of documents matching the filter.
+     * Specify an empty filter to count all documents.
      */
-    async count(
+    public async count(
         database_name: string,
         collection_name: string,
         filter: Filter<Document>,
         options: CountDocumentsOptions = {},
     ) {
-        await this._connect();
+        await this.ensureConnection();
+
         return await this.collection(database_name, collection_name).countDocuments(filter, options);
     }
 
     /**
-     * Finds all documents matching the filter
+     * Finds all documents matching the filter.
+     * Specify an empty filter to find all documents.
      */
-    async find(
+    public async find(
         database_name: string,
         collection_name: string,
         filter: Filter<Document>,
         options: FindOptions<Document> = {},
     ) {
-        await this._connect();
+        await this.ensureConnection();
+
         return this.collection(database_name, collection_name).find(filter, options);
     }
 
     /**
-     * Adds documents to a specified collection
+     * Adds documents to a specified collection.
+     * If the documents do not have an `_id` field, one will be generated automatically.
      */
-    async add(
+    public async add(
         database_name: string,
         collection_name: string,
         items: OptionalId<Document>[],
         options: BulkWriteOptions = {},
     ) {
-        await this._connect();
+        await this.ensureConnection();
+
         return await this.collection(database_name, collection_name).insertMany(items, options);
     }
 
     /**
-     * Updates all documents matching the filter
+     * Updates all documents matching the filter.
+     * Specify an empty filter to update all documents.
      */
-    async update(
+    public async update(
         database_name: string,
         collection_name: string,
         filter: Filter<Document>,
         update: UpdateFilter<Document>,
         options: UpdateOptions = {},
     ) {
-        await this._connect();
+        await this.ensureConnection();
+
         return await this.collection(database_name, collection_name).updateMany(filter, update, options);
     }
 
     /**
-     * Performs an aggregation on the specified collection
+     * Performs an aggregation on the specified collection.
+     * The pipeline is an array of aggregation stages.
+     * Each stage is represented by a document of operations to perform on the collection.
+     * The pipeline is executed in order while pipelining the results of each stage to the next.
      */
-    async aggregate(
+    public async aggregate(
         database_name: string,
         collection_name: string,
         pipeline: Document[],
         options: AggregateOptions,
     ) {
-        await this._connect();
+        await this.ensureConnection();
+
         return this.collection(database_name, collection_name).aggregate(pipeline, options);
     }
 
     /**
-     * Removes documents matching the filter
+     * Removes documents matching the filter.
+     * Specify an empty filter to remove all documents.
      */
-    async remove(
+    public async remove(
         database_name: string,
         collection_name: string,
         filter: Filter<Document>,
         options: DeleteOptions = {},
     ) {
-        await this._connect();
+        await this.ensureConnection();
+
         return await this.collection(database_name, collection_name).deleteMany(filter, options);
     }
 }

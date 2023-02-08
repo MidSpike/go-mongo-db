@@ -96,7 +96,7 @@ export class GoMongoDb {
         options: FindOptions<Document> = {},
     ) {
         await this._connect();
-        return this.collection(database_name, collection_name).find(filter, options).toArray();
+        return this.collection(database_name, collection_name).find(filter, options);
     }
 
     /**

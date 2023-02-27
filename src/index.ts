@@ -20,9 +20,9 @@ import {
 //------------------------------------------------------------//
 
 export class GoMongoDb {
-    private _is_connected: boolean = false;
+    protected _is_connected: boolean = false;
 
-    private _is_destroyed: boolean = false;
+    protected _is_destroyed: boolean = false;
 
     public readonly client: MongoClient;
 

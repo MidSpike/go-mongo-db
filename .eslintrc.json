@@ -3,29 +3,28 @@
         "browser": false,
         "node": true,
         "commonjs": true,
-        "es2021": true
+        "es2022": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": "latest"
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "deprecation"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "ignorePatterns": [
         "node_modules/",
-        "dist/",
-        "build/",
-        "coverage/",
-        "test/",
-        "*.d.ts"
+        "dist/"
     ],
     "rules": {
-        "@typescript-eslint/no-inferrable-types": "off",
         "accessor-pairs": "error",
         "array-bracket-newline": "off",
         "array-bracket-spacing": "off",
@@ -81,9 +80,15 @@
         "default-case": "error",
         "default-case-last": "error",
         "default-param-last": "error",
-        "dot-location": "error",
+        "dot-location": [
+            "error",
+            "property"
+        ],
         "dot-notation": "error",
-        "eol-last": "error",
+        "eol-last": [
+            "error",
+            "always"
+        ],
         "eqeqeq": "error",
         "func-call-spacing": "error",
         "func-name-matching": "error",
@@ -100,7 +105,13 @@
             "consistent"
         ],
         "function-paren-newline": "off",
-        "generator-star-spacing": "error",
+        "generator-star-spacing": [
+            "error",
+            {
+                "after": true,
+                "before": false
+            }
+        ],
         "grouped-accessor-pairs": "error",
         "guard-for-in": "error",
         "id-denylist": "error",
@@ -124,7 +135,14 @@
             "windows"
         ],
         "lines-around-comment": "off",
-        "lines-between-class-members": "error",
+        "lines-between-class-members": [
+            "error",
+            "always",
+            {
+                "exceptAfterSingleLine": true
+            }
+        ],
+        "max-classes-per-file": "off",
         "max-depth": "error",
         "max-len": "off",
         "max-lines": "off",
@@ -146,7 +164,8 @@
         "no-alert": "error",
         "no-array-constructor": "error",
         "no-await-in-loop": "off",
-        "no-bitwise": "error",
+        "no-async-promise-executor": "off",
+        "no-bitwise": "warn",
         "no-caller": "error",
         "no-confusing-arrow": "off",
         "no-console": "off",
@@ -161,7 +180,7 @@
                 "allowEmptyCatch": true
             }
         ],
-        "no-empty-function": "error",
+        "no-empty-function": "off",
         "no-eq-null": "error",
         "no-eval": "error",
         "no-extend-native": "error",
@@ -181,7 +200,17 @@
         "no-lonely-if": "error",
         "no-loop-func": "error",
         "no-loss-of-precision": "error",
-        "no-magic-numbers": "off",
+        "no-magic-numbers": [
+            "off",
+            {
+                "ignoreArrayIndexes": true,
+                "ignoreDefaultValues": true,
+                "ignore": [
+                    0,
+                    1
+                ]
+            }
+        ],
         "no-mixed-operators": [
             "error",
             {
@@ -232,20 +261,13 @@
         "no-unreachable-loop": "error",
         "no-unsafe-optional-chaining": "error",
         "no-unused-expressions": "error",
-        "no-unused-vars": [
-            "error",
-            {
-                "vars": "all",
-                "args": "none",
-                "ignoreRestSiblings": true
-            }
-        ],
-        "no-use-before-define": "error",
+        "no-unused-vars": "off",
+        "no-use-before-define": "off",
         "no-useless-backreference": "error",
         "no-useless-call": "error",
         "no-useless-computed-key": "off",
         "no-useless-concat": "error",
-        "no-useless-constructor": "error",
+        "no-useless-constructor": "off",
         "no-useless-escape": "off",
         "no-useless-return": "off",
         "no-var": "error",
@@ -287,7 +309,7 @@
         ],
         "radix": [
             "error",
-            "as-needed"
+            "always"
         ],
         "require-atomic-updates": "error",
         "require-await": "off",
@@ -311,13 +333,21 @@
             "error",
             "last"
         ],
-        "sort-imports": ["error", {
-            "ignoreCase": false,
-            "ignoreDeclarationSort": false,
-            "ignoreMemberSort": false,
-            "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
-            "allowSeparatedGroups": true
-        }],
+        "sort-imports": [
+            "error",
+            {
+                "ignoreCase": false,
+                "ignoreDeclarationSort": false,
+                "ignoreMemberSort": false,
+                "memberSyntaxSortOrder": [
+                    "none",
+                    "all",
+                    "multiple",
+                    "single"
+                ],
+                "allowSeparatedGroups": true
+            }
+        ],
         "sort-keys": "off",
         "sort-vars": "error",
         "space-before-blocks": "error",
@@ -353,6 +383,30 @@
         "yoda": [
             "error",
             "never"
-        ]
+        ],
+        "@typescript-eslint/no-unused-vars": [
+            "warn",
+            {
+                "vars": "all",
+                "args": "none",
+                "ignoreRestSiblings": true,
+                "varsIgnorePattern": "^_",
+                "argsIgnorePattern": "^_",
+                "destructuredArrayIgnorePattern": "^_"
+            }
+        ],
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
+        "@typescript-eslint/no-use-before-define": [
+            "error",
+            {
+                "ignoreTypeReferences": true
+            }
+        ],
+        "@typescript-eslint/restrict-plus-operands": "error",
+        "deprecation/deprecation": "warn"
     }
 }

@@ -4,17 +4,25 @@
 
 import {
     AggregateOptions,
+    AggregationCursor,
     BulkWriteOptions,
+    Collection,
     CountDocumentsOptions,
+    Db,
     DeleteOptions,
+    DeleteResult,
     Document,
     Filter,
+    FindCursor,
     FindOptions,
+    InsertManyResult,
     MongoClient,
     MongoClientOptions,
     OptionalId,
     UpdateFilter,
     UpdateOptions,
+    UpdateResult,
+    WithId,
 } from 'mongodb';
 
 //------------------------------------------------------------//
@@ -51,7 +59,7 @@ export class GoMongoDb {
      *
      * @internal intended for internal use only.
      */
-    public ensureNotDestroyed(): void {
+    public async ensureNotDestroyed(): Promise<void> {
         if (this._is_destroyed) throw new Error('GoMongoDb instance is destroyed and cannot be used anymore');
     }
 
@@ -83,7 +91,7 @@ export class GoMongoDb {
      *
      * For applications that require frequent database access, you should avoid calling this method.
      */
-    public async destroy() {
+    public async destroy(): Promise<void> {
         this._is_destroyed = true;
         this._is_connected = false;
 
@@ -96,10 +104,10 @@ export class GoMongoDb {
      *
      * @internal intended for internal use only.
      */
-    public database(
+    public async database(
         database_name: string,
-    ) {
-        this.ensureNotDestroyed();
+    ): Promise<Db> {
+        await this.ensureNotDestroyed();
 
         return this.client.db(database_name);
     }
@@ -110,13 +118,15 @@ export class GoMongoDb {
      *
      * @internal intended for internal use only.
      */
-    public collection(
+    public async collection(
         database_name: string,
         collection_name: string,
-    ) {
-        this.ensureNotDestroyed();
+    ): Promise<Collection<Document>> {
+        await this.ensureNotDestroyed();
 
-        return this.database(database_name).collection(collection_name);
+        const database = await this.database(database_name);
+
+        return database.collection(collection_name);
     }
 
     /**
@@ -128,10 +138,12 @@ export class GoMongoDb {
         collection_name: string,
         filter: Filter<Document>,
         options: CountDocumentsOptions = {},
-    ) {
+    ): Promise<number> {
         await this.ensureConnection();
 
-        return await this.collection(database_name, collection_name).countDocuments(filter, options);
+        const collection = await this.collection(database_name, collection_name);
+
+        return await collection.countDocuments(filter, options);
     }
 
     /**
@@ -143,10 +155,12 @@ export class GoMongoDb {
         collection_name: string,
         filter: Filter<Document>,
         options: FindOptions<Document> = {},
-    ) {
+    ): Promise<FindCursor<WithId<Document>>> {
         await this.ensureConnection();
 
-        return this.collection(database_name, collection_name).find(filter, options);
+        const collection = await this.collection(database_name, collection_name);
+
+        return collection.find(filter, options);
     }
 
     /**
@@ -158,10 +172,12 @@ export class GoMongoDb {
         collection_name: string,
         items: OptionalId<Document>[],
         options: BulkWriteOptions = {},
-    ) {
+    ): Promise<InsertManyResult<Document>> {
         await this.ensureConnection();
 
-        return await this.collection(database_name, collection_name).insertMany(items, options);
+        const collection = await this.collection(database_name, collection_name);
+
+        return await collection.insertMany(items, options);
     }
 
     /**
@@ -174,10 +190,12 @@ export class GoMongoDb {
         filter: Filter<Document>,
         update: UpdateFilter<Document>,
         options: UpdateOptions = {},
-    ) {
+    ): Promise<UpdateResult<Document>> {
         await this.ensureConnection();
 
-        return await this.collection(database_name, collection_name).updateMany(filter, update, options);
+        const collection = await this.collection(database_name, collection_name);
+
+        return await collection.updateMany(filter, update, options);
     }
 
     /**
@@ -189,10 +207,12 @@ export class GoMongoDb {
         collection_name: string,
         filter: Filter<Document>,
         options: DeleteOptions = {},
-    ) {
+    ): Promise<DeleteResult> {
         await this.ensureConnection();
 
-        return await this.collection(database_name, collection_name).deleteMany(filter, options);
+        const collection = await this.collection(database_name, collection_name);
+
+        return await collection.deleteMany(filter, options);
     }
 
     /**
@@ -206,10 +226,12 @@ export class GoMongoDb {
         collection_name: string,
         pipeline: Document[],
         options: AggregateOptions,
-    ) {
+    ): Promise<AggregationCursor<Document>> {
         await this.ensureConnection();
 
-        return this.collection(database_name, collection_name).aggregate(pipeline, options);
+        const collection = await this.collection(database_name, collection_name);
+
+        return collection.aggregate(pipeline, options);
     }
 }
 

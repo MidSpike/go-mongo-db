@@ -1,6 +1,6 @@
 {
     "name": "go-mongo-db",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Allows for quick and simple access to a MongoDB database.",
     "license": "MIT",
     "keywords": [],

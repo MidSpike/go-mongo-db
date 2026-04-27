@@ -154,7 +154,7 @@ export class GoMongoDb {
         database_name: string,
         collection_name: string,
         filter: Filter<Document>,
-        options: FindOptions<Document> = {},
+        options: FindOptions = {},
     ): Promise<FindCursor<WithId<Document>>> {
         await this.ensureConnection();
 

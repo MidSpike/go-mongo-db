@@ -1,6 +1,6 @@
 {
     "name": "go-mongo-db",
-    "version": "2.2.0",
+    "version": "3.0.0",
     "description": "Allows for quick and simple access to a MongoDB database.",
     "license": "MIT",
     "keywords": [],
@@ -19,8 +19,8 @@
         "test": "npm run prepare"
     },
     "engines": {
-        "node": ">=16.0.0",
-        "npm": ">=8.0.0"
+        "node": ">=20.0.0",
+        "npm": ">=10.0.0"
     },
     "devDependencies": {
         "husky": "9.1.7",

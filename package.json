@@ -15,8 +15,8 @@
         "husky": "is-ci || husky install",
         "lint": "echo \"No linting rules defined\"",
         "build": "npx tsc --build",
-        "prepare": "npm run husky && npm run lint && npm run build",
-        "test": "npm run prepare"
+        "prepare": "husky || true",
+        "test": "npm run lint && npm run build"
     },
     "engines": {
         "node": ">=20.0.0",

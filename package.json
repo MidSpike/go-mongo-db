@@ -29,6 +29,6 @@
     },
     "dependencies": {
         "go-mongo-db": "file:",
-        "mongodb": "6.14.2"
+        "mongodb": "7.2.0"
     }
 }
